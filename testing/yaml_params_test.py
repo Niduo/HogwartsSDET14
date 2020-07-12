@@ -4,7 +4,6 @@ from testing.test_calcu import addition, subtraction, multiplication, division
 
 
 # 加法
-@pytest.mark.usefixtures("print_method")
 @pytest.mark.parametrize("a, b, expected_result", yaml.safe_load(open("./testParam/add.yaml")))
 def test_addition(a, b, expected_result):
     actual_result = addition(a, b)
@@ -12,7 +11,6 @@ def test_addition(a, b, expected_result):
 
 
 # 减法
-@pytest.mark.usefixtures("print_method")
 @pytest.mark.parametrize('a, b, expected_result', yaml.safe_load(open("./testParam/sub.yaml")))
 def test_subtraction(a, b, expected_result):
     actual_result = subtraction(a, b)
@@ -20,7 +18,6 @@ def test_subtraction(a, b, expected_result):
 
 
 # 乘法
-@pytest.mark.usefixtures("print_method")
 @pytest.mark.parametrize('a, b, expected_result', yaml.safe_load(open("./testParam/multi.yaml")))
 def test_multiplication(a, b, expected_result):
     actual_result = multiplication(a, b)
