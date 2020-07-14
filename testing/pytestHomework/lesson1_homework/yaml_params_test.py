@@ -1,6 +1,6 @@
 import pytest
 import yaml
-from pytestHomework.class1_homework.test_calcu import addition, subtraction, multiplication, division
+from pytestHomework.lesson1_homework.test_calcu import addition, subtraction, multiplication, division
 
 
 # 加法
