@@ -6,18 +6,19 @@ import pytest
 
 class TestOrdering:
     @pytest.mark.run(order=1)
-    @pytest.mark.dependency()
+    @pytest.mark.dependency(name="test_a")
     @pytest.mark.parametrize('a, b, expected_result', [(1, 2, 3),
                                                        (-1, 3, 2),
                                                        (100, 0.44, 100.44)],
                              ids=[i for i in range(3)])
     def test_addition(self, a, b, expected_result):
-        pytest.assume(expected_result == a + b)
+        assert expected_result == a - b
 
     @pytest.mark.run(order=3)
+    @pytest.mark.dependency(name="test_m")
     @pytest.mark.parametrize('a, b, expected_result', [(9, 2, 18),
                                                        (10, 2.3, 23.0),
-                                                       (-4, -2, 8)],
+                                                       (-4, -2, 6)],
                              ids=[i for i in range(3)])
     def test_multiplication(self, a, b, expected_result):
         assert expected_result == a * b
@@ -27,7 +28,7 @@ class TestOrdering:
                                                        (10, 2.3, 7.7),
                                                        (-4, -2, -2)],
                              ids=[i for i in range(3)])
-    @pytest.mark.dependency(depends=["test_addition"])
+    @pytest.mark.dependency(depends=["test_a"])
     def test_subtraction(self, a, b, expected_result):
         assert expected_result == a - b
 
@@ -36,7 +37,7 @@ class TestOrdering:
                                                        (10, 2.5, 4),
                                                        (4, -2, -2)],
                              ids=[i for i in range(3)])
-    @pytest.mark.dependency(depends=["test_multiplication"])
+    @pytest.mark.dependency(depends=["test_m"])
     def test_division(self, a, b, expected_result):
         try:
             assert expected_result == a / b
